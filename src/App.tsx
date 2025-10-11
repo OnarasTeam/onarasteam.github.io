@@ -10,7 +10,7 @@ function App() {
       <div id='main-info-card'>
         <div id='main-info-card-title'>
           <h1>ONARA WEB</h1>
-          <p>{t('main.info')}</p>
+          <p>{t('main.info.subtitle')}</p>
         </div>
 
         <div id='main-info-apps-container'>
