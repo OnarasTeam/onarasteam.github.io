@@ -7,7 +7,6 @@ function App() {
     <div id='main-container'>
       <Routes>
         <Route path='/' element={<Main />} />
-        <Route path='/error' element={<h1>ERROR</h1>} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </div>
