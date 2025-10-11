@@ -1,5 +1,6 @@
 import './App.css'
 import { useTranslation } from 'react-i18next'
+import TitleSection from './components/TitleSection'
 
 function App() {
   const [t] = useTranslation()
@@ -9,13 +10,13 @@ function App() {
       <div id='main-info-card'>
         <div id='main-info-card-title'>
           <h1>ONARA WEB</h1>
-          <p>{t('main.info.subtitle')}</p>
+          <p>{t('main.info')}</p>
         </div>
 
         <div id='main-info-apps-container'>
-          <div className='app'>Onaras</div>
-          <div className='app'>Minecraft</div>
-          <div className='app'>Pokémon</div>
+          <TitleSection name='Onara' />
+          <TitleSection name='Minecraft' />
+          <TitleSection name='Pokémon' />
         </div>
       </div>
     </div>

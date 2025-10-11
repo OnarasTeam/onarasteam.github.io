@@ -1,0 +1,21 @@
+.app {
+  /* Display */
+  width: 5em;
+  height: 2.5em;
+  padding: 10px;
+
+  /* Aligns */
+  text-align: center;
+  align-content: center;
+
+  /* Background */
+  background-color: #00000050;
+
+  /* Border */
+  border-radius: 20px;
+
+  /* Text */
+  font-size: 25px;
+
+  cursor: default;
+}
