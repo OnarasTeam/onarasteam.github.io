@@ -1,9 +1,7 @@
-
 {
-    "footer": "This is a test :D",
-    "count-text": "The count is ",
-    "text": {
-        "edit": "Edit",
-        "save_hmt": "and save to test HMR"
+    "main": {
+        "info": {
+            "subtitle": "Esto se supone que es una descripción"
+        }
     }
 }
