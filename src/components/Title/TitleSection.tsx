@@ -10,7 +10,7 @@ interface TitleScreenProps {
 export default function TitleSection({ name, children, onClick }: TitleScreenProps) {
   const [showMenu, setShowMenu] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
-
+  console.log(onclick)
   useEffect(() => {
     if (showMenu) {
       setIsAnimating(true)
@@ -18,9 +18,9 @@ export default function TitleSection({ name, children, onClick }: TitleScreenPro
   }, [showMenu])
 
   return (
-    <div className='title-section-container' onClick={onClick}>
+    <div className={`title-section-container`} onClick={onClick}>
       <div
-        className={`app`}
+        className={`app ${onClick ? 'clickable' : ''}`}
         onMouseEnter={() => setShowMenu(true)}
         onMouseLeave={() => setShowMenu(false)}
         style={{

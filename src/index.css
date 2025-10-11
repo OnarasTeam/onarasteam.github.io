@@ -34,9 +34,14 @@ button {
   padding: 25px;
   border: transparent;
   border-radius: 25px;
+  cursor: pointer;
 }
 
 button:hover {
   background-color: var(--background-color-shadow);
-  box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.7);
+}
+
+.clickable:hover {
+  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.6);
 }
