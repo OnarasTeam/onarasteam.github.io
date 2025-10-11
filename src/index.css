@@ -26,3 +26,17 @@ body {
   margin: 0;
   padding: 0;
 }
+
+button {
+  background-color: var(--background-color-black);
+  font-size: x-large;
+  font-weight: bold;
+  padding: 25px;
+  border: transparent;
+  border-radius: 25px;
+}
+
+button:hover {
+  background-color: var(--background-color-shadow);
+  box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.6);
+}

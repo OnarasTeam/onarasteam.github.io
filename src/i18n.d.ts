@@ -5,7 +5,7 @@ declare module 'i18next' {
   interface CustomTypeOptions {
     // 1. Define el namespace por defecto (si lo usas)
     defaultNS: 'translation'; 
-    
+
     // 2. Define la estructura de tus recursos
     resources: {
       translation: typeof translation;

@@ -1,13 +1,13 @@
 import { useState, useEffect, type ReactElement } from 'react'
 import './TitleSection.css'
-import type { SubtitleProps } from './Subsection'
 
 interface TitleScreenProps {
   name: string
-  children?: ReactElement<SubtitleProps> | ReactElement<SubtitleProps>[]
+  children?: ReactElement | ReactElement[]
+  onClick?: () => void
 }
 
-export default function TitleSection({ name, children }: TitleScreenProps) {
+export default function TitleSection({ name, children, onClick }: TitleScreenProps) {
   const [showMenu, setShowMenu] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
 
@@ -18,13 +18,13 @@ export default function TitleSection({ name, children }: TitleScreenProps) {
   }, [showMenu])
 
   return (
-    <div className='title-section-container'>
+    <div className='title-section-container' onClick={onClick}>
       <div
         className={`app`}
         onMouseEnter={() => setShowMenu(true)}
         onMouseLeave={() => setShowMenu(false)}
         style={{
-          cursor: children ? 'default' : 'pointer',
+          cursor: onClick ? 'pointer' : 'default',
         }}
       >
         {name}

@@ -1,7 +1,11 @@
 {
-    "main": {
-        "info": {
-            "subtitle": "Esto se supone que es una descripción"
-        }
+  "main": {
+    "info": {
+      "subtitle": "Esto se supone que es una descripción"
     }
+  },
+  "not-found": {
+    "error": "PÁGINA NO ENCONTRADA",
+    "reload": "RECARGAR"
+  }
 }
