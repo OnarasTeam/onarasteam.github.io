@@ -9,26 +9,12 @@ function App() {
   const [t, i18n] = useTranslation()
 
   return (
-    <>
-      <div>
-        <a href='https://vite.dev' target='_blank'>
-          <img src={viteLogo} className='logo' alt='Vite logo' />
-        </a>
-        <a href='https://react.dev' target='_blank'>
-          <img src={reactLogo} className='logo react' alt='React logo' />
-        </a>
+    <div id='main-container'>
+      <div className='main-info-card'>
+        <h1>ONARA WEB</h1>
+        <p>Esto se supone que es una descripción</p>
       </div>
-      <h1>Vite + React</h1>
-      <div className='card'>
-        <button onClick={() => setCount((count) => count + 1)}>
-          {t('count-text')} {count}
-        </button>
-        <p>
-          {t('text.edit')} <code>src/App.tsx</code> {t('text.save_hmt')}
-        </p>
-      </div>
-      <p className='read-the-docs'>{t('footer')}</p>
-    </>
+    </div>
   )
 }
 
