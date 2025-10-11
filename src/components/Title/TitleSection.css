@@ -1,0 +1,90 @@
+.title-section-container {
+  padding: 0;
+  margin: 0;
+  gap: 0;
+}
+
+.app {
+  /* Display */
+  width: 5em;
+  height: 2em;
+  padding: 20px;
+  margin: 0;
+  position: relative;
+  z-index: 0;
+
+  /* Aligns */
+  text-align: center;
+  align-content: center;
+
+  /* Background */
+  background-color: var(--background-color-shadow);
+
+  /* Border */
+  border-radius: 20px;
+
+  /* Text */
+  font-size: 20px;
+  font-weight: bold;
+
+  cursor: default;
+}
+
+.menu {
+  /* Display */
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+
+  width: calc(5em + 40px);
+
+  top: calc(1.5em + 20px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: -1;
+
+  /* Spaces */
+  gap: 5px;
+
+  /* Border */
+  border-radius: 0 0 20px 20px;
+
+  /* Background */
+  background-color: var(--background-color-shadow);
+
+  /* Animation */
+  max-height: 0;
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition:
+    max-height 0.2s ease-in-out,
+    padding 0.2s ease-in-out;
+}
+
+.menu.open {
+  max-height: 500px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.menu.closing hr {
+  opacity: 0;
+}
+
+.menu.open hr {
+  opacity: 1;
+}
+
+.menu-item {
+  font-size: 15px;
+  font-weight: 500;
+  padding: 20px 0;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: var(--background-color-black);
+}
