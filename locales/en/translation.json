@@ -1,0 +1,11 @@
+{
+  "main": {
+    "info": {
+      "subtitle": "This is a description"
+    }
+  },
+  "not-found": {
+    "error": "PAGE NOT FOUND",
+    "reload": "RELOAD"
+  }
+}
