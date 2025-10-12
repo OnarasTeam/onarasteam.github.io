@@ -10,7 +10,7 @@ export default function Main() {
   const navigate = useNavigate()
 
   return (
-    <Card>
+    <Card id='main-info-card'>
       <div id='main-info-card-title'>
         <h1>ONARA WEB</h1>
         <p>{t('main.info.subtitle')}</p>

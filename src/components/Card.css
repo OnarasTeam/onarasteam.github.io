@@ -1,0 +1,16 @@
+.card {
+  /* Display */
+  display: flex;
+  flex-direction: column;
+
+  /* Align */
+  align-items: center;
+  justify-content: center;
+
+  /* Border */
+  border-radius: 25px;
+
+  /* Background */
+  background-color: #00000040;
+  box-shadow: 0 0 15px 10px rgba(0, 0, 0, 0.2);
+}

@@ -1,22 +1,7 @@
 #main-info-card {
-  /* Display */
-  display: flex;
-  flex-direction: column;
-
-  /* Align */
-  align-items: center;
-  justify-content: center;
-
   /* Spaces */
-  padding: 30px;
+  padding: 40px;
   gap: 50px;
-
-  /* Border */
-  border-radius: 25px;
-
-  /* Background */
-  background-color: #00000030;
-  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.3);
 }
 
 #main-info-card h1 {
