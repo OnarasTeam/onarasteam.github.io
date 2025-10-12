@@ -6,7 +6,7 @@
 
 .section {
   /* Display */
-  width: 5em;
+  width: 5.5em;
   height: 2em;
   padding: 20px;
   margin: 0;
@@ -18,7 +18,7 @@
   align-content: center;
 
   /* Background */
-  background-color: var(--background-color-shadow);
+  background-color: var(--color-secondary-shadow);
 
   /* Border */
   border-radius: 20px;
@@ -28,6 +28,13 @@
   font-weight: bold;
 
   cursor: default;
+
+  transition: border-radius 0.1s ease-in-out;
+}
+
+.section.open {
+  /* Border */
+  border-radius: 20px 20px 0 0;
 }
 
 .menu {
@@ -36,14 +43,11 @@
   flex-direction: column;
   position: absolute;
 
-  width: calc(5em + 40px);
+  width: calc(5.5em + 40px);
 
-  top: calc(1.5em + 20px);
+  top: calc(1.5em + 60px);
   left: 50%;
   transform: translateX(-50%);
-
-  z-index: -1;
-
   /* Spaces */
   gap: 5px;
 
@@ -51,32 +55,21 @@
   border-radius: 0 0 20px 20px;
 
   /* Background */
-  background-color: var(--background-color-shadow);
+  background-color: var(--background-color);
 
   /* Animation */
   max-height: 0;
   overflow: hidden;
   padding-top: 0;
   padding-bottom: 0;
-  transition:
-    max-height 0.2s ease-in-out,
-    padding 0.2s ease-in-out;
+  transition: max-height 0.2s cubic-bezier(1, 0, 0, 1);
 }
 
 .menu.open {
   max-height: 500px;
-  padding-top: 10px;
 }
 
-.menu.closing hr {
-  opacity: 0;
-}
-
-.menu.open hr {
-  opacity: 1;
-}
-
-.menu-item {
+.subsection {
   font-size: 15px;
   font-weight: 500;
   padding: 20px 0;
@@ -84,6 +77,17 @@
   cursor: pointer;
 }
 
-.menu-item:hover {
-  background-color: var(--background-color-dark);
+.subsection:hover {
+  color: var(--color-primary);
+  background-color: var(--background-color-shadow);
+  font-size: 17px;
+}
+
+.section-text {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(1, 0, 0, 1);
+}
+
+.section:hover .section-text {
+  transform: scale(1.2);
 }

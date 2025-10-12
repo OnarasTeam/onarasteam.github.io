@@ -10,7 +10,8 @@ interface TitleScreenProps {
 export default function TitleSection({ name, children, onClick }: TitleScreenProps) {
   const [showMenu, setShowMenu] = useState(false)
   const [isAnimating, setIsAnimating] = useState(false)
-  console.log(onclick)
+  const [animationEnd, setAnimationEnd] = useState(false)
+
   useEffect(() => {
     if (showMenu) {
       setIsAnimating(true)
@@ -20,22 +21,26 @@ export default function TitleSection({ name, children, onClick }: TitleScreenPro
   return (
     <div className={`title-section-container`} onClick={onClick}>
       <div
-        className={`section ${onClick ? 'clickable' : ''}`}
+        className={`section ${onClick ? 'clickable' : ''} ${children && (showMenu || animationEnd) ? 'open' : ''}`}
         onMouseEnter={() => setShowMenu(true)}
         onMouseLeave={() => setShowMenu(false)}
         style={{
           cursor: onClick ? 'pointer' : 'default',
         }}
       >
-        {name}
+        <span className='section-text'>{name}</span>
         {children && (showMenu || isAnimating) && (
-          <div className={`menu ${showMenu ? 'open' : ''}`}>
-            <hr
-              style={{
-                marginBottom: 0,
-                width: '80%',
-              }}
-            />
+          <div
+            className={`menu ${showMenu ? 'open' : ''}`}
+            onTransitionStart={(x) => {
+              console.log(children && showMenu && animationEnd)
+              setAnimationEnd(true)
+            }}
+            onTransitionEnd={(x) => {
+              console.log(children && showMenu && animationEnd)
+              setAnimationEnd(false)
+            }}
+          >
             {children}
           </div>
         )}
