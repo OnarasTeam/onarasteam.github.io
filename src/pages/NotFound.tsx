@@ -9,7 +9,9 @@ export default function NotFound() {
   return (
     <Card>
       <h1>{t('not-found.error')}</h1>
-      <Button onClick={() => navigate('/')}>{t('not-found.reload')}</Button>
+      <Button zoomOnHover={true} onClick={() => navigate('/')}>
+        {t('not-found.reload')}
+      </Button>
     </Card>
   )
 }
