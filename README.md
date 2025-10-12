@@ -1,82 +1,327 @@
-# PBS-Frontend — Project overview
+# PBS-Frontend
 
-This project is a frontend template built with React + TypeScript using Vite and optimized with SWC. It includes i18n (internationalization) support, ESLint + Prettier configuration, and common scripts for development and deployment.
+A modern React + TypeScript frontend template built with Vite and optimized with SWC. Features internationalization (i18n), ESLint + Prettier configuration, and ready-to-deploy scripts.
 
-## Main technologies
+## Table of Contents
 
-- React (v19) for the UI library.
-- TypeScript for static typing.
-- Vite for fast development and bundling.
-- SWC via `@vitejs/plugin-react-swc` for faster compilation and fast refresh.
-- i18next + react-i18next for internationalization.
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Available Scripts](#available-scripts)
+- [Technologies](#technologies)
+- [Internationalization (i18n)](#internationalization-i18n)
+- [Code Quality](#code-quality)
+- [Deployment](#deployment)
+- [Advanced Configuration](#advanced-configuration)
 
-## Current configuration (exact files)
+---
 
-Below are the key configuration files currently used in this project (paths and relevant excerpts). Use these as reference when updating tooling or debugging.
+## Getting Started
 
-- `vite.config.ts` (uses SWC React plugin)
+### Prerequisites
 
-```ts
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+- Node.js (v16 or higher recommended)
+- npm or yarn package manager
 
-export default defineConfig({
-  plugins: [react()],
-})
+### Installation
+
+1. Clone the repository:
+
+```powershell
+git clone <repository-url>
+cd PBS-Frontend
 ```
 
-- `eslint.config.js` (ESLint + TypeScript + Prettier)
+2. Install dependencies:
 
-Location: `eslint.config.js` (root). Key points:
+```powershell
+npm install
+```
+
+3. Start the development server:
+
+```powershell
+npm run dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173` (or the URL shown in terminal)
+
+---
+
+## Project Structure
+
+```
+PBS-Frontend/
+├── public/                    # Static assets
+│   └── locales/              # Translation files
+│       ├── en/
+│       │   └── translation.json
+│       └── es/
+│           └── translation.json
+├── src/
+│   ├── api/                  # API integration layer
+│   ├── assets/               # Images, fonts, etc.
+│   ├── components/           # Reusable React components
+│   ├── pages/                # Page components
+│   │   ├── Main.tsx
+│   │   └── Main.css
+│   ├── App.tsx              # Root component
+│   ├── main.tsx             # Application entry point
+│   ├── i18n.ts              # i18next configuration
+│   └── index.css            # Global styles
+├── index.html               # HTML entry point
+├── package.json             # Dependencies and scripts
+├── vite.config.ts           # Vite configuration
+├── tsconfig.json            # TypeScript configuration
+└── eslint.config.js         # ESLint configuration
+```
+
+---
+
+## Available Scripts
+
+| Command           | Description                               |
+| ----------------- | ----------------------------------------- |
+| `npm run dev`     | Start development server with hot reload  |
+| `npm run build`   | Build for production (outputs to `dist/`) |
+| `npm run preview` | Preview production build locally          |
+| `npm run lint`    | Run ESLint to check code quality          |
+| `npm run format`  | Format code with Prettier                 |
+| `npm run deploy`  | Deploy to GitHub Pages                    |
+
+### Examples
+
+**Development:**
+
+```powershell
+npm run dev
+```
+
+**Production build:**
+
+```powershell
+npm run build
+npm run preview
+```
+
+---
+
+## Technologies
+
+This project uses modern web development tools:
+
+- **React 19** - UI library with latest features
+- **TypeScript** - Static type checking
+- **Vite** - Fast build tool and dev server
+- **SWC** - Fast TypeScript/JSX compiler (via `@vitejs/plugin-react-swc`)
+- **React Router** - Client-side routing
+- **i18next** - Internationalization framework
+
+### Key Dependencies
+
+```json
+{
+  "react": "^19.1.1",
+  "react-router-dom": "^7.9.4",
+  "i18next": "^25.6.0",
+  "react-i18next": "^16.0.0"
+}
+```
+
+---
+
+## Internationalization (i18n)
+
+The project supports multiple languages using `react-i18next` with automatic language detection.
+
+### How it works
+
+1. **Language detection** - Automatically detects user's language using multiple sources (see detection order below)
+2. **Translation loading** - Loads translations from `public/locales/{lang}/translation.json`
+3. **Fallback** - Defaults to English if translation not found
+4. **Persistence** - Saves user's language choice in localStorage
+
+### Language Detection Order
+
+The system checks for the language in the following order (first match wins):
+
+1. **Query string** - `?lng=es` in the URL
+2. **Cookie** - `i18next` cookie value
+3. **localStorage** - Saved language preference
+4. **sessionStorage** - Temporary session storage
+5. **navigator** - Browser language settings
+6. **HTML tag** - `<html lang="...">` attribute
+
+This order is configured in `src/i18n.ts`:
+
+```ts
+detection: {
+  order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
+  caches: ['localStorage'],  // Persist choice in localStorage
+}
+```
+
+### Changing Language
+
+#### Method 1: Query String (Highest Priority)
+
+Add `?lng=` to the URL:
+
+```
+http://localhost:5173/?lng=es
+http://localhost:5173/?lng=en
+```
+
+**Use case:** Share links with specific language, override all other settings.
+
+#### Method 2: Programmatically in Code
+
+Use the `changeLanguage` function in any component:
+
+```tsx
+import { useTranslation } from 'react-i18next'
+
+function LanguageSwitcher() {
+  const { i18n } = useTranslation()
+
+  const changeToSpanish = () => {
+    i18n.changeLanguage('es') // Saves to localStorage automatically
+  }
+
+  const changeToEnglish = () => {
+    i18n.changeLanguage('en')
+  }
+
+  return (
+    <div>
+      <button onClick={changeToEnglish}>English</button>
+      <button onClick={changeToSpanish}>Español</button>
+      <p>Current language: {i18n.language}</p>
+    </div>
+  )
+}
+```
+
+#### Method 3: localStorage (Manual)
+
+Open browser DevTools Console and run:
 
 ```js
-import { defineConfig, globalIgnores } from 'eslint/config'
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import prettierPlugin from 'eslint-plugin-prettier'
+// Change to Spanish
+localStorage.setItem('i18nextLng', 'es')
+location.reload()
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      parser: '@typescript-eslint/parser',
-      ecmaVersion: 2020,
-      sourceType: 'module',
-      globals: globals.browser,
-      parserOptions: { ecmaFeatures: { jsx: true } },
-    },
-    plugins: { '@typescript-eslint': tseslint, prettier: prettierPlugin },
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs['recommended-latest'],
-      reactRefresh.configs.vite,
-      'plugin:prettier/recommended',
-      'prettier',
-    ],
-    rules: {
-      quotes: ['error', 'single', { avoidEscape: true }],
-      semi: ['error', 'never'],
-      '@typescript-eslint/semi': ['error', 'never'],
-      'jsx-quotes': ['error', 'prefer-single'],
-      'prettier/prettier': ['error', { singleQuote: true, jsxSingleQuote: true, semi: false }],
-    },
-  },
-])
+// Change to English
+localStorage.setItem('i18nextLng', 'en')
+location.reload()
 ```
 
-- `src/i18n.ts` (i18next initialization)
+#### Method 4: Cookie (Manual)
+
+Set a cookie named `i18next`:
+
+```js
+// In browser console
+document.cookie = 'i18next=es; path=/; max-age=31536000'
+location.reload()
+```
+
+#### Method 5: Browser Language
+
+Change your browser's language settings:
+
+- **Chrome/Edge:** Settings → Languages → Preferred languages
+- **Firefox:** Settings → Language → Choose language
+
+The app will automatically detect it if no higher-priority method is set.
+
+#### Method 6: HTML lang Attribute
+
+Set in `index.html` (lowest priority):
+
+```html
+<html lang="es"></html>
+```
+
+This is overridden by all other methods.
+
+### Adding Translations
+
+1. Create/edit translation files:
+   - `public/locales/en/translation.json`
+   - `public/locales/es/translation.json`
+
+Example `public/locales/en/translation.json`:
+
+```json
+{
+  "welcome": "Welcome",
+  "goodbye": "Goodbye"
+}
+```
+
+Example `public/locales/es/translation.json`:
+
+```json
+{
+  "welcome": "Bienvenido",
+  "goodbye": "Adiós"
+}
+```
+
+2. Use translations in components:
+
+```tsx
+import { useTranslation } from 'react-i18next'
+
+function MyComponent() {
+  const { t } = useTranslation()
+
+  return (
+    <div>
+      <h1>{t('welcome')}</h1>
+      <p>{t('goodbye')}</p>
+    </div>
+  )
+}
+```
+
+### Complete Example: Language Selector Component
+
+```tsx
+import { useTranslation } from 'react-i18next'
+
+function LanguageSelector() {
+  const { i18n, t } = useTranslation()
+
+  const languages = [
+    { code: 'en', name: 'English' },
+    { code: 'es', name: 'Español' },
+  ]
+
+  return (
+    <div>
+      <label htmlFor='language-select'>{t('selectLanguage')}:</label>
+      <select
+        id='language-select'
+        value={i18n.language}
+        onChange={(e) => i18n.changeLanguage(e.target.value)}
+      >
+        {languages.map((lang) => (
+          <option key={lang.code} value={lang.code}>
+            {lang.name}
+          </option>
+        ))}
+      </select>
+    </div>
+  )
+}
+```
+
+### Configuration
+
+See `src/i18n.ts` for the complete i18next setup:
 
 ```ts
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
-import Backend from 'i18next-http-backend'
-
 i18n
   .use(Backend)
   .use(LanguageDetector)
@@ -84,7 +329,9 @@ i18n
   .init({
     debug: false,
     fallbackLng: 'en',
-    backend: { loadPath: '/locales/{{lng}}/{{ns}}.json' },
+    backend: {
+      loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json`,
+    },
     detection: {
       order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
       caches: ['localStorage'],
@@ -93,121 +340,232 @@ i18n
     defaultNS: 'translation',
     react: { useSuspense: true },
   })
-
-export default i18n
 ```
 
-## i18n (internationalization)
+### Debugging Language Detection
 
-This project uses `react-i18next` together with `i18next-browser-languagedetector` and `i18next-http-backend` to detect the browser language and load translations from `public/locales/{lang}/translation.json`.
+Enable debug mode in `src/i18n.ts`:
 
-Example files:
-
-- `public/locales/en/translation.json`
-- `public/locales/es/translation.json`
-- `src/i18n.ts` (i18next initialization and configuration)
-
-## ESLint + Prettier configuration
-
-The project integrates ESLint and Prettier to keep code consistent:
-
-- ESLint with TypeScript support (`@typescript-eslint/parser`, `@typescript-eslint/eslint-plugin`).
-- Useful plugins: `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`.
-- Prettier is installed and used together with `eslint-config-prettier` and `eslint-plugin-prettier` to avoid conflicts between linting rules and formatting.
-
-Available commands (see `package.json`):
-
-- `npm run lint` — Run ESLint across the project.
-- `npm run format` — Run Prettier to format files (`src/**/*.{ts,tsx,js,jsx,json,css,md}`).
-
-Configuration tips:
-
-- For type-aware rules (stricter TypeScript checks) make sure ESLint reads `tsconfig.app.json` / `tsconfig.node.json` via `parserOptions.project` when enabling rules that require type information.
-- `eslint-config-prettier` should be the last entry in ESLint's `extends` to disable rules that conflict with Prettier.
-
-## Project structure
-
-Main structure (short):
-
-- `index.html` — Vite entry HTML.
-- `package.json` — scripts and dependencies.
-- `tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json` — TypeScript configs.
-- `vite.config.ts` — Vite configuration (uses `@vitejs/plugin-react-swc`).
-- `eslint.config.js` — ESLint configuration (if present).
-- `src/` — application source code:
-  - `main.tsx` — app entry and React render.
-  - `App.tsx` — root component.
-  - `i18n.ts` — i18next initialization.
-  - `assets/` — images and assets.
-  - `index.css`, `App.css` — styles.
-- `public/` — static files and translations:
-  - `locales/en/translation.json`
-  - `locales/es/translation.json`
-
-Short tree example:
-
-```
-.
-├─ public/
-│  └─ locales/
-│     ├─ en/translation.json
-│     └─ es/translation.json
-└─ src/
-   ├─ main.tsx
-   ├─ App.tsx
-   ├─ i18n.ts
-   └─ assets/
+```ts
+i18n.init({
+  debug: true, // Enable console logs
+  // ... rest of config
+})
 ```
 
-## Useful scripts (from `package.json`)
+Then check the browser console to see which detection method was used.
 
-- `npm run dev` — Start Vite in development mode (HMR / Fast Refresh).
-- `npm run build` — Build for production (`tsc -b` then `vite build`).
-- `npm run preview` — Serve the generated `dist` for a local preview (`vite preview`).
-- `npm run lint` — Run ESLint.
-- `npm run format` — Run Prettier.
+---
 
-Example (PowerShell):
+## Code Quality
+
+### ESLint + Prettier
+
+The project enforces code quality with ESLint and Prettier integration.
+
+**Run linter:**
 
 ```powershell
-npm install
-npm run dev
+npm run lint
 ```
+
+**Auto-format code:**
+
+```powershell
+npm run format
+```
+
+### Code Style Rules
+
+- Single quotes for strings
+- No semicolons
+- 2-space indentation
+- JSX uses single quotes
+
+These rules are enforced automatically via `eslint.config.js` and Prettier configuration.
+
+---
 
 ## Deployment
 
-1. Create a production build:
+### GitHub Pages
+
+This project is configured to deploy to GitHub Pages at a subpath (e.g., `https://username.github.io/WebTemplate/`).
+
+#### Configuration
+
+The following files are configured for GitHub Pages deployment:
+
+**1. `vite.config.ts`** - Sets the base path:
+
+```ts
+export default defineConfig({
+  base: '/WebTemplate/', // Replace with your repo name
+  plugins: [react()],
+})
+```
+
+**2. `src/main.tsx`** - Router basename:
+
+```tsx
+<BrowserRouter basename={import.meta.env.BASE_URL || '/'}>
+  <App />
+</BrowserRouter>
+```
+
+#### Deployment Steps
+
+**Option 1: Using gh-pages package (Recommended)**
+
+1. Build the project:
 
 ```powershell
 npm run build
 ```
 
-2. Options to publish the generated `dist` folder:
-
-- Vercel: connect your repo; Vercel will detect Vite and run `npm run build` automatically.
-- Netlify: set the build command to `npm run build` and the publish directory to `dist`.
-- GitHub Pages: use a GitHub Action to push `dist` to the `gh-pages` branch or use the `gh-pages` package.
-- Static server (NGINX, Apache): copy the `dist` content to the server's public directory.
-
-To preview `dist` locally:
+2. Deploy to GitHub Pages:
 
 ```powershell
-npm run preview
+npm run deploy
 ```
 
-Notes about SWC and compatibility
+This will push the `dist/` folder to the `gh-pages` branch.
 
-- The project uses `@vitejs/plugin-react-swc` to use SWC instead of Babel for TSX/JSX transforms. This generally improves build times.
-- Some very specific plugins may expect Babel transformations; if you hit compatibility issues you can switch to `@vitejs/plugin-react` (Babel) in `vite.config.ts`.
+3. Enable GitHub Pages in your repository settings:
+   - Go to **Settings** → **Pages**
+   - Source: Deploy from branch
+   - Branch: `gh-pages` → `/ (root)`
+   - Click **Save**
 
-## Quick contribution guide
+**Option 2: GitHub Actions**
 
-- Clone the repository.
-- Install dependencies: `npm install`.
-- Run in development: `npm run dev`.
-- Format: `npm run format`.
-- Lint: `npm run lint`.
+Create `.github/workflows/deploy.yml`:
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+```
+
+#### Important: Update Base Path
+
+When deploying to a different repository, update the `base` path in `vite.config.ts`:
+
+```ts
+base: "/YourRepoName/",  // Must match your GitHub repository name
+```
+
+### Other Deployment Options
+
+**Vercel:**
+
+1. Connect your GitHub repository
+2. Vercel auto-detects Vite and builds automatically
+3. No additional configuration needed
+
+**Netlify:**
+
+1. Build command: `npm run build`
+2. Publish directory: `dist`
+3. Set in Netlify dashboard or `netlify.toml`
+
+**Static Server (NGINX/Apache):**
+
+1. Run `npm run build`
+2. Copy contents of `dist/` to your web server's public directory
+3. Configure server to serve `index.html` for all routes (SPA fallback)
 
 ---
 
-README updated: added info about i18n, React, Vite, SWC, ESLint + Prettier, project structure and deployment.
+## Advanced Configuration
+
+### Using SWC vs Babel
+
+This project uses SWC for faster builds. To switch to Babel:
+
+1. Install Babel plugin:
+
+```powershell
+npm install -D @vitejs/plugin-react
+```
+
+2. Update `vite.config.ts`:
+
+```ts
+import react from '@vitejs/plugin-react' // instead of react-swc
+
+export default defineConfig({
+  plugins: [react()],
+})
+```
+
+### TypeScript Configuration
+
+- `tsconfig.json` - Base configuration
+- `tsconfig.app.json` - App-specific settings
+- `tsconfig.node.json` - Node/build scripts settings
+
+### Environment Variables
+
+Create `.env` files for different environments:
+
+```
+.env                # All environments
+.env.local          # Local overrides (gitignored)
+.env.production     # Production only
+.env.development    # Development only
+```
+
+Access in code:
+
+```ts
+const apiUrl = import.meta.env.VITE_API_URL
+```
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/my-feature`
+3. Make your changes
+4. Run linter: `npm run lint`
+5. Format code: `npm run format`
+6. Commit changes: `git commit -m 'Add my feature'`
+7. Push to branch: `git push origin feature/my-feature`
+8. Open a Pull Request
+
+---
+
+## License
+
+This project is open source and available under the MIT License.
+
+---
+
+**README Structure:** From basic getting started → project overview → daily usage → deployment → advanced topics
