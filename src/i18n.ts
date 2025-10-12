@@ -17,7 +17,7 @@ i18n
     // Configuración clave para que Backend funcione
     backend: {
       // Apunta a tu carpeta public/locales
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}/{{ns}}.json`,
     },
 
     // Configuración clave para que LanguageDetector funcione
