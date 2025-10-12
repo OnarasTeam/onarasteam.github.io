@@ -6,5 +6,5 @@ export interface SubtitleProps {
 }
 
 export default function Subsection({ name }: SubtitleProps): ReactElement<SubtitleProps> {
-  return <div className='menu-item clickable'>{name}</div>
+  return <div className='subsection clickable'>{name}</div>
 }
