@@ -29,3 +29,12 @@
   gap: 5px;
   padding: 15px;
 }
+
+#main-info-card-title h1 {
+  font-size: 65px;
+  text-align: center;
+}
+#main-info-card-title p {
+  font-size: 30px;
+  text-align: center;
+}

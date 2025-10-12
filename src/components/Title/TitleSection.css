@@ -6,7 +6,7 @@
 
 .section {
   /* Display */
-  width: 5.5em;
+  width: 5em;
   height: 2em;
   padding: 20px;
   margin: 0;
@@ -21,10 +21,10 @@
   background-color: var(--color-secondary-shadow);
 
   /* Border */
-  border-radius: 20px;
+  border-radius: 25px;
 
   /* Text */
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
 
   cursor: default;
@@ -43,9 +43,9 @@
   flex-direction: column;
   position: absolute;
 
-  width: calc(5.5em + 40px);
+  width: calc(5em + 40px);
 
-  top: calc(1.5em + 60px);
+  top: calc(1.5em + 65px);
   left: 50%;
   transform: translateX(-50%);
   /* Spaces */
@@ -70,9 +70,9 @@
 }
 
 .subsection {
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 500;
-  padding: 20px 0;
+  padding: 18px 0;
   border-radius: 20px;
   cursor: pointer;
 }
@@ -80,7 +80,7 @@
 .subsection:hover {
   color: var(--color-primary);
   background-color: var(--background-color-shadow);
-  font-size: 17px;
+  font-size: 22px;
 }
 
 .section-text {
