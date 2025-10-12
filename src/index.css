@@ -25,6 +25,7 @@
 body {
   margin: 0;
   padding: 0;
+  background: var(--color-tertiary-shadow);
 }
 
 button {
@@ -44,4 +45,19 @@ button:hover {
 
 .clickable:hover {
   box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.6);
+}
+
+#main-container {
+  /* Display */
+  min-height: 100vh;
+  height: fit-content;
+  width: fit-content;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+
+  /* Aligns */
+  align-items: center;
+  justify-content: center; /* Background */
+  background: linear-gradient(0deg, var(--color-tertiary-shadow) 0%, var(--background-color) 100%);
 }
