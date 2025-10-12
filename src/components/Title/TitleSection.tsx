@@ -20,7 +20,7 @@ export default function TitleSection({ name, children, onClick }: TitleScreenPro
   return (
     <div className={`title-section-container`} onClick={onClick}>
       <div
-        className={`app ${onClick ? 'clickable' : ''}`}
+        className={`section ${onClick ? 'clickable' : ''}`}
         onMouseEnter={() => setShowMenu(true)}
         onMouseLeave={() => setShowMenu(false)}
         style={{

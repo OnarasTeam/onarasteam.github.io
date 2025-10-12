@@ -3,7 +3,24 @@
   --color-primary: #f2bf27;
   --color-secondary: #d91b41;
   --color-tertiary: #7e0a55;
-  --color-tertiary-shadow: #4e0b43;
+
+  /* Calculated Colors - Primary */
+  --color-primary-light: color-mix(in srgb, var(--color-primary) 50%, white);
+  --color-primary-shadow: color-mix(in srgb, var(--color-primary) 80%, black);
+  --color-primary-dark: color-mix(in srgb, var(--color-primary) 50%, black);
+  --color-primary-darker: color-mix(in srgb, var(--color-primary) 30%, black);
+
+  /* Calculated Colors - Secondary */
+  --color-secondary-light: color-mix(in srgb, var(--color-secondary) 50%, white);
+  --color-secondary-shadow: color-mix(in srgb, var(--color-secondary) 80%, black);
+  --color-secondary-dark: color-mix(in srgb, var(--color-secondary) 50%, black);
+  --color-secondary-darker: color-mix(in srgb, var(--color-secondary) 30%, black);
+
+  /* Calculated Colors - Tertiary */
+  --color-tertiary-light: color-mix(in srgb, var(--color-tertiary) 50%, white);
+  --color-tertiary-shadow: color-mix(in srgb, var(--color-tertiary) 80%, black);
+  --color-tertiary-dark: color-mix(in srgb, var(--color-tertiary) 50%, black);
+  --color-tertiary-darker: color-mix(in srgb, var(--color-tertiary) 20%, black);
 
   /* Font */
   --font-color: #f7eeee;
@@ -12,8 +29,10 @@
 
   /* Background */
   --background-color: #1e0d30;
-  --background-color-shadow: #210721;
-  --background-color-black: #180518;
+  --background-color-light: color-mix(in srgb, var(--background-color) 50%, white);
+  --background-color-shadow: color-mix(in srgb, var(--background-color) 80%, black);
+  --background-color-dark: color-mix(in srgb, var(--background-color) 50%, black);
+  --background-color-darker: color-mix(in srgb, var(--background-color) 20%, black);
   /* Otros */
 }
 
@@ -29,7 +48,7 @@ body {
 }
 
 button {
-  background-color: var(--background-color-black);
+  background-color: var(--background-color-shadow);
   font-size: x-large;
   font-weight: bold;
   padding: 25px;
@@ -39,12 +58,12 @@ button {
 }
 
 button:hover {
-  background-color: var(--background-color-shadow);
+  background-color: var(--background-color);
   box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.7);
 }
 
 .clickable:hover {
-  box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
 }
 
 #main-container {
