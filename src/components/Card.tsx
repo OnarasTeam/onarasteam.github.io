@@ -4,7 +4,7 @@ import './Card.css'
 
 interface CardProps {
   children: any
-  id: string
+  id?: string
 }
 
 export default function Card({ id, children }: CardProps) {
