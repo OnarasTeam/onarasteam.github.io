@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4. Construye la aplicación React (esto genera la carpeta 'build')
+      # 4. Construye la aplicación React (esto genera la carpeta 'dist', según tu log de error)
       - name: Build application
         run: npm run build
 
@@ -48,14 +48,11 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
       # 6. Ejecuta el comando de despliegue con autenticación forzada
-      - name: Deploy to GitHub Pages (Forced Auth Fix)
-        # Importante: Aquí usamos la variable de entorno GH_TOKEN para construir la URL de autenticación
-        # y así evitar el error "could not read Username".
+      - name: Deploy to GitHub Pages (Fix Auth and Directory)
+        # ¡CORRECCIÓN CRUCIAL! Cambiado '-d build' a '-d dist' para que apunte a la carpeta correcta
         run: |
           REPO_URL="https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
-          # Ejecutamos el despliegue de forma más directa, pasando la URL del repositorio con el token
-          npx gh-pages -d build --repo $REPO_URL
+          # Ejecutamos el despliegue usando la carpeta 'dist' que fue creada en el paso 4
+          npx gh-pages -d dist --repo $REPO_URL
         env:
-          # Aunque no es la única forma de pasar el token aquí, mantenemos la variable
-          # para que gh-pages no intente usar el método interactivo por defecto.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
