@@ -1,5 +1,3 @@
-import type { ReactElement } from 'react'
-
 import './Card.css'
 
 interface CardProps {
