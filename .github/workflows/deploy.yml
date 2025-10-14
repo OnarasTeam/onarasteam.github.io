@@ -48,11 +48,12 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
       # 6. Ejecuta el comando de despliegue con autenticación forzada
-      - name: Deploy to GitHub Pages (Fix Auth and Directory)
-        # ¡CORRECCIÓN CRUCIAL! Cambiado '-d build' a '-d dist' para que apunte a la carpeta correcta
+      - name: Deploy to GitHub Pages (Final Auth Fix)
+        # CORRECCIÓN DEFINITIVA: Usar 'x-oauth-basic' como usuario y el token como contraseña.
         run: |
-          REPO_URL="https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
-          # Ejecutamos el despliegue usando la carpeta 'dist' que fue creada en el paso 4
+          # El formato "x-oauth-basic:TOKEN" es el método más robusto de autenticación HTTP con tokens en CI.
+          REPO_URL="https://x-oauth-basic:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          # Ejecutamos el despliegue usando la carpeta 'dist'
           npx gh-pages -d dist --repo $REPO_URL
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
