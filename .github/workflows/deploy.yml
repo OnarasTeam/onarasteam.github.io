@@ -9,10 +9,11 @@ on:
       - main
 
 # Permisos que necesita el workflow para poder escribir en la rama gh-pages
+# El permiso 'contents: write' es obligatorio para que gh-pages pueda crear y hacer push a la rama.
 permissions:
   contents: write
 
-# Define los trabajos (jobs) que se van a ejecutar. En este caso, solo uno.
+# Define los trabajos (jobs) que se van a ejecutar.
 jobs:
   deploy:
     # El tipo de máquina virtual que se usará para ejecutar el trabajo
@@ -28,21 +29,29 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22' # Puedes cambiarlo a la versión de Node que uses
+          node-version: '22' # Versión de Node.js recomendada
           cache: 'npm' # Habilita el caché para las dependencias de npm
 
       # 3. Instala las dependencias del proyecto
-      # Usamos 'npm ci' en lugar de 'npm install' porque es más rápido y seguro para entornos de automatización
       - name: Install dependencies
         run: npm ci
 
-      # 4. Configura el usuario de Git para el commit que hará gh-pages
-      # Esto es necesario para que el script gh-pages pueda hacer un commit en tu nombre
+      # 4. Construye la aplicación React (esto genera la carpeta 'build')
+      - name: Build application
+        run: npm run build
+
+      # 5. Configura el usuario de Git para el commit que hará gh-pages
       - name: Configure Git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      # 5. Ejecuta el comando de despliegue que tienes en tu package.json
+      # 6. Ejecuta el comando de despliegue
+      # Se inyecta el token de GitHub (GH_TOKEN) para la autenticación
       - name: Deploy to GitHub Pages
+        # Importante: Asegúrate de que tu script 'deploy' en package.json apunte a la carpeta correcta
         run: npm run deploy
+        env:
+          # La librería 'gh-pages' utiliza esta variable (GH_TOKEN) para autenticarse,
+          # resolviendo el error de "could not read Username".
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
