@@ -41,17 +41,21 @@ jobs:
         run: npm run build
 
       # 5. Configura el usuario de Git para el commit que hará gh-pages
+      # Este paso es ahora opcional pero lo mantenemos por buenas prácticas.
       - name: Configure Git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      # 6. Ejecuta el comando de despliegue
-      # Se inyecta el token de GitHub (GH_TOKEN) para la autenticación
-      - name: Deploy to GitHub Pages
-        # Importante: Asegúrate de que tu script 'deploy' en package.json apunte a la carpeta correcta
-        run: npm run deploy
+      # 6. Ejecuta el comando de despliegue con autenticación forzada
+      - name: Deploy to GitHub Pages (Forced Auth Fix)
+        # Importante: Aquí usamos la variable de entorno GH_TOKEN para construir la URL de autenticación
+        # y así evitar el error "could not read Username".
+        run: |
+          REPO_URL="https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          # Ejecutamos el despliegue de forma más directa, pasando la URL del repositorio con el token
+          npx gh-pages -d build --repo $REPO_URL
         env:
-          # La librería 'gh-pages' utiliza esta variable (GH_TOKEN) para autenticarse,
-          # resolviendo el error de "could not read Username".
+          # Aunque no es la única forma de pasar el token aquí, mantenemos la variable
+          # para que gh-pages no intente usar el método interactivo por defecto.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
