@@ -1,0 +1,59 @@
+# Nombre del workflow que aparecerá en la pestaña "Actions" de GitHub
+name: Deploy React App to GitHub Pages
+
+# Configura cuándo se debe ejecutar la acción
+on:
+  # Se ejecuta cada vez que haces un push a la rama "main"
+  push:
+    branches:
+      - main
+
+# Permisos que necesita el workflow para poder escribir en la rama gh-pages
+# El permiso 'contents: write' es obligatorio para que gh-pages pueda crear y hacer push a la rama.
+permissions:
+  contents: write
+
+# Define los trabajos (jobs) que se van a ejecutar.
+jobs:
+  deploy:
+    # El tipo de máquina virtual que se usará para ejecutar el trabajo
+    runs-on: ubuntu-latest
+
+    # Los pasos que se ejecutarán en orden
+    steps:
+      # 1. Descarga el código de tu repositorio en la máquina virtual
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Configura el entorno de Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22' # Versión de Node.js recomendada
+          cache: 'npm' # Habilita el caché para las dependencias de npm
+
+      # 3. Instala las dependencias del proyecto
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Construye la aplicación React (esto genera la carpeta 'dist', según tu log de error)
+      - name: Build application
+        run: npm run build
+
+      # 5. Configura el usuario de Git para el commit que hará gh-pages
+      # Este paso es ahora opcional pero lo mantenemos por buenas prácticas.
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      # 6. Ejecuta el comando de despliegue con autenticación forzada
+      - name: Deploy to GitHub Pages (Final Auth Fix)
+        # CORRECCIÓN DEFINITIVA: Usar 'x-oauth-basic' como usuario y el token como contraseña.
+        run: |
+          # El formato "x-oauth-basic:TOKEN" es el método más robusto de autenticación HTTP con tokens en CI.
+          REPO_URL="https://x-oauth-basic:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          # Ejecutamos el despliegue usando la carpeta 'dist'
+          npx gh-pages -d dist --repo $REPO_URL
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

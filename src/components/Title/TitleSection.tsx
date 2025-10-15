@@ -32,11 +32,11 @@ export default function TitleSection({ name, children, onClick }: TitleScreenPro
         {children && (showMenu || isAnimating) && (
           <div
             className={`menu ${showMenu ? 'open' : ''}`}
-            onTransitionStart={(x) => {
+            onTransitionStart={() => {
               console.log(children && showMenu && animationEnd)
               setAnimationEnd(true)
             }}
-            onTransitionEnd={(x) => {
+            onTransitionEnd={() => {
               console.log(children && showMenu && animationEnd)
               setAnimationEnd(false)
             }}
