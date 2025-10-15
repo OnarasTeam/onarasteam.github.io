@@ -3,8 +3,7 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
-import prettierPlugin from 'eslint-plugin-prettier'
-import prettierConfig from 'eslint-config-prettier'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
@@ -12,7 +11,7 @@ export default defineConfig([
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
-      parser: '@typescript-eslint/parser',
+      parser: tseslint.parser,
       ecmaVersion: 2020,
       sourceType: 'module',
       globals: globals.browser,
@@ -20,30 +19,36 @@ export default defineConfig([
         ecmaFeatures: { jsx: true },
       },
     },
+    // 🟢 LIMPIEZA FINAL: Todos los plugins se cargan a través de sus objetos en 'extends'
+    // Por lo tanto, esta sección 'plugins' puede quedar vacía o eliminarse si no tienes plugins extra.
     plugins: {
-      '@typescript-eslint': tseslint,
-      'prettier': prettierPlugin,
+      // ❌ ELIMINADO: 'react-hooks': reactHooks,
+      // ❌ ELIMINADO: 'react-refresh': reactRefresh,
     },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
+      // 👈 Estas configuraciones ya se encargan de cargar sus respectivos plugins:
       reactHooks.configs['recommended-latest'],
       reactRefresh.configs.vite,
-      'plugin:prettier/recommended',
-      'prettier',
+      // Asegúrate de que Prettier SIEMPRE sea el último para anular las reglas de estilo:
+      eslintPluginPrettierRecommended,
     ],
     rules: {
-      // Enforce single quotes and no semicolons
-      quotes: ['error', 'single', { avoidEscape: true }],
-      semi: ['error', 'never'],
-      '@typescript-eslint/semi': ['error', 'never'],
-      // Enforce single quotes in JSX attributes
-      'jsx-quotes': ['error', 'prefer-single'],
-      // Let Prettier handle formatting (including JSX quotes)
+      // Regla de React Hooks (importante para evitar bugs de dependencia):
+      'react-hooks/exhaustive-deps': 'warn',
+
+      // Regla de Prettier (formato) con tus opciones:
       'prettier/prettier': [
         'error',
-        { singleQuote: true, jsxSingleQuote: true, semi: false },
+        {
+          singleQuote: true,
+          jsxSingleQuote: true,
+          semi: false,
+          endOfLine: 'auto',
+        },
       ],
+      'no-unused-vars': 'warn',
     },
   },
 ])
