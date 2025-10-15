@@ -1,8 +1,8 @@
-import type { HTMLAttributes, ReactElement } from 'react'
+import type { HTMLAttributes } from 'react'
 import './Button.css'
 
 interface ButtonProps {
-  children: any
+  children: React.ReactNode
   zoomOnHover?: boolean
   onClick: () => void
   sx?: HTMLAttributes<HTMLButtonElement>

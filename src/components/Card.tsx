@@ -1,7 +1,7 @@
 import './Card.css'
 
 interface CardProps {
-  children: any
+  children: React.ReactNode
   id?: string
   padding?: number
   gap?: number
