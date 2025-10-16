@@ -2,15 +2,17 @@ import { useTranslation } from 'react-i18next'
 import Subsection from '../components/Title/Subsection'
 import TitleSection from '../components/Title/TitleSection'
 import './Main.css'
-import Card from '../components/Card'
 import { useNavigate } from 'react-router-dom'
+import { useScreenSizeEm } from '../hooks/useScreenSize'
+import MainCard from '../components/Cards/MainCard'
 
 export default function Main() {
   const [t] = useTranslation()
   const navigate = useNavigate()
+  const screenSize = useScreenSizeEm()
 
   return (
-    <Card id='main-info-card'>
+    <MainCard id='main-info-card' width={40} padding={3.5}>
       <div id='main-info-card-title'>
         <h1>ONARA WEB</h1>
         <p>{t('main.info.subtitle')}</p>
@@ -32,6 +34,6 @@ export default function Main() {
           }}
         />
       </div>
-    </Card>
+    </MainCard>
   )
 }
