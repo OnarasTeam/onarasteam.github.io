@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next'
-import Card from '../components/Card'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/Button'
 import ReplayIcon from '@mui/icons-material/Replay'
+import MainCard from '../components/Cards/MainCard'
 export default function NotFound() {
   const [t] = useTranslation()
   const navigate = useNavigate()
   return (
-    <Card padding={60} gap={50}>
+    <MainCard width={30} padding={5} gap={60}>
       <h1
         style={{
           width: '8em',
@@ -19,6 +19,6 @@ export default function NotFound() {
         {t('not-found.reload')}
         <ReplayIcon />
       </Button>
-    </Card>
+    </MainCard>
   )
 }
