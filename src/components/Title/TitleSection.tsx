@@ -7,52 +7,51 @@ interface TitleScreenProps {
   onClick?: () => void
 }
 
-export default function TitleSection({ name, children, onClick }: TitleScreenProps) {
-  const [showMenu, setShowMenu] = useState(false)
-  const [isAnimating, setIsAnimating] = useState(false)
-  const [animationEnd, setAnimationEnd] = useState(false)
+type MenuState = 'CLOSE' | 'OPENING' | 'OPEN' | 'CLOSING'
 
-  useEffect(() => {
-    if (showMenu) {
-      setIsAnimating(true)
-    }
-  }, [showMenu])
+export default function TitleSection({ name, children, onClick }: TitleScreenProps) {
+  const [menuState, setMenuState] = useState<MenuState>('CLOSE')
+
+  function isMenuOpen() {
+    return menuState === 'OPEN' || menuState === 'OPENING'
+  }
 
   return (
-    <div className={`title-section-container ${showMenu ? 'menu-active' : ''}`} onClick={onClick}>
+    <div
+      className={`title-section-container ${menuState !== 'CLOSE' ? 'highlighted' : ''}`}
+      onClick={onClick}
+    >
       <div
-        className={`section ${onClick ? 'clickable' : ''} ${children && (showMenu || animationEnd) ? 'open' : ''}`}
-        onMouseEnter={() => setShowMenu(true)}
-        onMouseLeave={() => setShowMenu(false)}
+        className={`section ${onClick ? 'clickable' : ''} ${children && menuState !== 'CLOSE' ? 'open' : ''}`}
+        onMouseEnter={() => {
+          if (children) setMenuState('OPENING')
+        }}
+        onMouseLeave={() => {
+          if (children) setMenuState('CLOSING')
+        }}
         style={{
           cursor: onClick ? 'pointer' : 'default',
         }}
       >
         <span className='section-text'>{name}</span>
-        {children && (showMenu || isAnimating) && (
+        {children && (
           <>
             <div
-              className={`menu ${showMenu ? 'open' : ''}`}
               style={{
                 width: 'calc(5em + 40px)',
                 top: 'calc(1.5em + 50px)',
                 left: '50%',
                 transform: 'translateX(-50%)',
-
                 position: 'absolute',
                 backgroundColor: 'transparent',
                 height: '0.5em',
               }}
             />
             <div
-              className={`menu ${showMenu ? 'open' : ''}`}
-              onTransitionStart={() => {
-                console.log(children && showMenu && animationEnd)
-                setAnimationEnd(true)
-              }}
+              className={`menu ${isMenuOpen() ? 'open' : ''}`}
               onTransitionEnd={() => {
-                console.log(children && showMenu && animationEnd)
-                setAnimationEnd(false)
+                if (menuState === 'OPENING') setMenuState('OPEN')
+                if (menuState === 'CLOSING') setMenuState('CLOSE')
               }}
             >
               {/* Invisible */}

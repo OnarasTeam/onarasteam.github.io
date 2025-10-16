@@ -6,7 +6,7 @@
   z-index: 1;
 }
 
-.title-section-container.menu-active {
+.title-section-container.highlighted {
   z-index: 1000;
 }
 
