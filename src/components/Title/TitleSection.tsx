@@ -19,7 +19,7 @@ export default function TitleSection({ name, children, onClick }: TitleScreenPro
   }, [showMenu])
 
   return (
-    <div className={`title-section-container`} onClick={onClick}>
+    <div className={`title-section-container ${showMenu ? 'menu-active' : ''}`} onClick={onClick}>
       <div
         className={`section ${onClick ? 'clickable' : ''} ${children && (showMenu || animationEnd) ? 'open' : ''}`}
         onMouseEnter={() => setShowMenu(true)}
