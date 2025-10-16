@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactElement } from 'react'
+import { useState, type ReactElement } from 'react'
 import './TitleSection.css'
 
 interface TitleScreenProps {
