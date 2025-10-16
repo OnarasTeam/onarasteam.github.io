@@ -49,8 +49,7 @@
   flex-direction: column;
   position: absolute;
   width: calc(5em + 40px);
-  z-index: 1000000;
-  top: calc(1.5em + 65px);
+  top: calc(2em + 50px);
   left: 50%;
   transform: translateX(-50%);
   /* Spaces */

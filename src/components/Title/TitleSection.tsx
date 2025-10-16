@@ -30,19 +30,35 @@ export default function TitleSection({ name, children, onClick }: TitleScreenPro
       >
         <span className='section-text'>{name}</span>
         {children && (showMenu || isAnimating) && (
-          <div
-            className={`menu ${showMenu ? 'open' : ''}`}
-            onTransitionStart={() => {
-              console.log(children && showMenu && animationEnd)
-              setAnimationEnd(true)
-            }}
-            onTransitionEnd={() => {
-              console.log(children && showMenu && animationEnd)
-              setAnimationEnd(false)
-            }}
-          >
-            {children}
-          </div>
+          <>
+            <div
+              className={`menu ${showMenu ? 'open' : ''}`}
+              style={{
+                width: 'calc(5em + 40px)',
+                top: 'calc(1.5em + 50px)',
+                left: '50%',
+                transform: 'translateX(-50%)',
+
+                position: 'absolute',
+                backgroundColor: 'transparent',
+                height: '0.5em',
+              }}
+            />
+            <div
+              className={`menu ${showMenu ? 'open' : ''}`}
+              onTransitionStart={() => {
+                console.log(children && showMenu && animationEnd)
+                setAnimationEnd(true)
+              }}
+              onTransitionEnd={() => {
+                console.log(children && showMenu && animationEnd)
+                setAnimationEnd(false)
+              }}
+            >
+              {/* Invisible */}
+              {children}
+            </div>
+          </>
         )}
       </div>
     </div>
