@@ -11,8 +11,8 @@
 #main-info-apps-container {
   /* Display */
   display: flex;
-  flex-direction: row;
-
+  flex-wrap: wrap;
+  justify-content: center;
   /* Spaces */
   gap: 25px;
 }

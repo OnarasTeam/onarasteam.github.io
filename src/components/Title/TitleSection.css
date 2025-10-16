@@ -2,6 +2,12 @@
   padding: 0;
   margin: 0;
   gap: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.title-section-container.highlighted {
+  z-index: 1000;
 }
 
 .section {
@@ -42,10 +48,8 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-
   width: calc(5em + 40px);
-
-  top: calc(1.5em + 65px);
+  top: calc(2em + 50px);
   left: 50%;
   transform: translateX(-50%);
   /* Spaces */
@@ -75,6 +79,7 @@
   padding: 18px 0;
   border-radius: 20px;
   cursor: pointer;
+  z-index: 1000000;
 }
 
 .subsection:hover {
