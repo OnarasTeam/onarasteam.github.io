@@ -7,7 +7,7 @@ export default function NotFound() {
   const [t] = useTranslation()
   const navigate = useNavigate()
   return (
-    <MainCard width={30} padding={5} gap={60}>
+    <MainCard gap={60}>
       <h1
         style={{
           width: '8em',
