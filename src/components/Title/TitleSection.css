@@ -30,12 +30,18 @@
   border-radius: 25px;
 
   /* Text */
-  font-size: 25px;
+  font-size: 1.5em;
   font-weight: bold;
 
   cursor: default;
 
   transition: border-radius 0.1s ease-in-out;
+}
+
+.section.small {
+  width: 4.5em;
+  height: 1.5em;
+  font-size: 1.5em;
 }
 
 .section.open {
@@ -69,12 +75,17 @@
   transition: max-height 0.2s cubic-bezier(1, 0, 0, 1);
 }
 
+.menu.small {
+  width: calc(4.5em + 40px);
+  top: calc(1.5em + 50px);
+}
+
 .menu.open {
   max-height: 500px;
 }
 
 .subsection {
-  font-size: 20px;
+  font-size: 0.75em;
   font-weight: 500;
   padding: 18px 0;
   border-radius: 20px;
@@ -85,7 +96,7 @@
 .subsection:hover {
   color: var(--color-primary);
   background-color: var(--background-color-shadow);
-  font-size: 22px;
+  font-size: 0.85em;
 }
 
 .section-text {

@@ -1,5 +1,6 @@
 import { useState, type ReactElement } from 'react'
 import './TitleSection.css'
+import { useSmallClassEM } from '../../hooks/SmallHooks'
 
 interface TitleScreenProps {
   name: string
@@ -11,6 +12,7 @@ type MenuState = 'CLOSE' | 'OPENING' | 'OPEN' | 'CLOSING'
 
 export default function TitleSection({ name, children, onClick }: TitleScreenProps) {
   const [menuState, setMenuState] = useState<MenuState>('CLOSE')
+  const small = useSmallClassEM()
 
   function isMenuOpen() {
     return menuState === 'OPEN' || menuState === 'OPENING'
@@ -22,7 +24,7 @@ export default function TitleSection({ name, children, onClick }: TitleScreenPro
       onClick={onClick}
     >
       <div
-        className={`section ${onClick ? 'clickable' : ''} ${children && menuState !== 'CLOSE' ? 'open' : ''}`}
+        className={`section ${small} ${onClick ? 'clickable' : ''} ${children && menuState !== 'CLOSE' ? 'open' : ''}`}
         onMouseEnter={() => {
           if (children) setMenuState('OPENING')
         }}
@@ -48,7 +50,7 @@ export default function TitleSection({ name, children, onClick }: TitleScreenPro
               }}
             />
             <div
-              className={`menu ${isMenuOpen() ? 'open' : ''}`}
+              className={`menu ${small} ${isMenuOpen() ? 'open' : ''}`}
               onTransitionEnd={() => {
                 if (menuState === 'OPENING') setMenuState('OPEN')
                 if (menuState === 'CLOSING') setMenuState('CLOSE')
