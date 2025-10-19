@@ -1,8 +1,9 @@
 {
-  "name": "pbs-frontend",
+  "name": "onara-frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "http://beta.onara.top",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && cp CNAME dist/CNAME",
