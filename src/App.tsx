@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'
 import Main from './pages/Main'
 import NotFound from './pages/NotFound'
 import About from './pages/About'
@@ -6,11 +6,13 @@ import About from './pages/About'
 function App() {
   return (
     <div id='main-container'>
-      <Routes>
-        <Route path='/' element={<Main />} />
-        <Route path='/about' element={<About />} />
-        <Route path='*' element={<NotFound />} />
-      </Routes>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Main />} />
+          <Route path='/about' element={<About />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </Router>
     </div>
   )
 }
