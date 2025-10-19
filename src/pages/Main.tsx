@@ -4,19 +4,21 @@ import TitleSection from '../components/Title/TitleSection'
 import './Main.css'
 import { useNavigate } from 'react-router-dom'
 import MainCard from '../components/Cards/MainCard'
+import { useSmallClassEM } from '../hooks/SmallHooks'
 
 export default function Main() {
   const [t] = useTranslation()
   const navigate = useNavigate()
+  const small = useSmallClassEM()
 
   return (
-    <MainCard id='main-info-card' width={40} padding={3.5}>
+    <MainCard id='main-info-card'>
       <div id='main-info-card-title'>
-        <h1>ONARA WEB</h1>
-        <p>{t('main.info.subtitle')}</p>
+        <h1 className={small}>ONARA WEB</h1>
+        <p className={small}>{t('main.info.subtitle')}</p>
       </div>
 
-      <div id='main-info-apps-container'>
+      <div id='main-info-apps-container' className={small}>
         <TitleSection name='Onara'>
           <Subsection name='Onaras' />
         </TitleSection>

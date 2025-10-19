@@ -1,29 +1,12 @@
-import { useScreenSizeEm } from '../../hooks/useScreenSize'
+import { useSmallClassEM } from '../../hooks/SmallHooks'
 import type { CardProps } from './Card'
 import Card from './Card'
 
-interface MainCardProps extends CardProps {
-  width: number
-  padding: number
-}
+export default function MainCard({ id, children, gap, sx }: CardProps) {
+  const smallClass = useSmallClassEM()
 
-export default function MainCard({ id, children, gap, sx, width, padding }: MainCardProps) {
-  const screenSize = useScreenSizeEm()
-
-  function checkSize(): boolean {
-    return screenSize.x <= width + padding * 2
-  }
   return (
-    <Card
-      id={id}
-      className={`main-card ${checkSize() ? 'small' : ''}`}
-      gap={gap}
-      sx={{
-        ...sx,
-        width: `${checkSize() ? '100vw' : `${width}em`}`,
-        padding: `${checkSize() ? 0 : padding}em`,
-      }}
-    >
+    <Card id={id} className={`main-card ${smallClass}`} gap={gap} sx={sx}>
       {children}
     </Card>
   )

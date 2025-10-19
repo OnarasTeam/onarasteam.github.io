@@ -1,3 +1,8 @@
+#main-info-card.small {
+  justify-content: start;
+  padding-top: 3em;
+}
+
 #main-info-card p {
   margin: 0px;
 }
@@ -11,6 +16,16 @@
   gap: 25px;
 }
 
+#main-info-apps-container.small {
+  /* Display */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Spaces */
+  gap: 25px;
+}
+
+
 #main-info-card-title {
   /* Display */
   display: flex;
@@ -19,11 +34,3 @@
   padding: 15px;
 }
 
-#main-info-card-title h1 {
-  font-size: 65px;
-  text-align: center;
-}
-#main-info-card-title p {
-  font-size: 30px;
-  text-align: center;
-}

@@ -70,6 +70,19 @@ body {
 
 h1 {
   margin: 0px;
-  font-size: 50px;
+  font-size: 4em;
   text-align: center;
+}
+
+h1.small {
+  font-size: 3em;
+}
+
+p {
+  font-size: 2em;
+  text-align: center;
+}
+
+p.small {
+  font-size: 1.5em;
 }
